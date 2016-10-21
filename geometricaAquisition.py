@@ -55,10 +55,11 @@ class GeometricaAcquisition(QgsMapTool):
         if event.key() == Qt.Key_Control:
             self.free = True
         if event.key() == Qt.Key_Delete:
-            self.geometry.pop()
-            geom = QgsGeometry.fromPolygon([self.geometry])
-            self.qntPoint -= 1
-            self.rubberBand.setToGeometry(geom, None)      
+            if self.geometry:
+                self.geometry.pop()
+                geom = QgsGeometry.fromPolygon([self.geometry])
+                self.qntPoint -= 1
+                self.rubberBand.setToGeometry(geom, None)      
     
     def initVariable(self):
         if self.rubberBand:
