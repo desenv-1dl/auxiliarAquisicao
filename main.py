@@ -7,6 +7,7 @@ class Main:
     def __init__(self, iface):
         self.iface = iface
         self.canvas = iface.mapCanvas()
+        self.tool = None
                     
     def initGui(self):
         self.action1 = QAction(QIcon(QPixmap(["18 17 4 1",
@@ -53,15 +54,25 @@ class Main:
         self.action2.setEnabled(True)
         self.action2.triggered.connect(lambda:self.run(Circle))
         self.iface.digitizeToolBar().addAction(self.action2)
+        self.iface.actionToggleEditing().triggered.connect(self.closeCursor)
         
     def unload(self):
-        pass  
-      
+        if self.tool:
+            self.canvas.unsetMapTool(self.tool)
+            self.canvas.unsetCursor()
+                
+    def closeCursor(self, a):
+        if not a:
+            if self.tool:
+                self.canvas.unsetMapTool(self.tool)
+                self.canvas.unsetCursor()
+            
     def run(self, func):
         layer = self.canvas.currentLayer()
         if layer in self.iface.editableLayers():
             if layer.geometryType() == 2:
-                func(self.canvas, self.iface)
+                self.tool = func(self.canvas, self.iface)
+                self.canvas.setMapTool(self.tool)
             else:
                 self.iface.messageBar().pushMessage(u"Aviso", u"Ferramenta utilizada apenas em polígonos !",
                                                                     level=QgsMessageBar.INFO, duration=6)

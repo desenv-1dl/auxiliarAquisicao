@@ -21,9 +21,9 @@ class Polygon(GeometricaAcquisition):
         super(Polygon, self).__init__(canvas, iface)
         self.canvas = canvas
         self.iface = iface
-        self.canvas.setMapTool(self)
         self.rubberBand = None
         self.initVariable()
+       
         
     def initVariable(self):
         if self.rubberBand:

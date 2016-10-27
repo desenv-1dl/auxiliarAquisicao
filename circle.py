@@ -18,7 +18,6 @@ class Circle(GeometricaAcquisition):
         super(Circle, self).__init__(canvas, iface)
         self.canvas = canvas
         self.iface = iface
-        self.canvas.setMapTool(self)
         self.rubberBand = None
         self.initVariable()
         

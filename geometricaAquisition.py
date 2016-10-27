@@ -19,14 +19,16 @@ class GeometricaAcquisition(QgsMapTool):
         self.canvas = canvas
         self.rubberBand = None
         self.initVariable()
-        
+                
     def canvasPressEvent(self, e):
         pass
+    
     def deactivate(self):
-        pass
+        self.canvas.setMapTool(self)
+    
     def activate(self):
         self.free = False
-        self.canvas.setCursor(QCursor(QPixmap(["18 13 4 1",
+        self.cur = QCursor(QPixmap(["18 13 4 1",
                                     "           c None",
                                     "#          c #FF0000",
                                     ".          c #FF0000",
@@ -43,7 +45,8 @@ class GeometricaAcquisition(QgsMapTool):
                                     " ++    .#.    ++",
                                     "  ++    #    ++  ",
                                     "   +++++++++++   ",
-                                    "    +++++++++    ",])))
+                                    "    +++++++++    ",]))
+        self.canvas.setCursor(self.cur)
    
     def keyReleaseEvent(self, event):
         if event.key() == Qt.Key_Escape:
