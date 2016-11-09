@@ -114,7 +114,7 @@ class GeometricaAcquisition(QgsMapTool):
         return rubberBand
     
     def createGeometry(self, geom):
-        if geom :           
+        if geom :
             layer = self.canvas.currentLayer() 
             feature = QgsFeature()
             fields = layer.pendingFields()
@@ -131,7 +131,6 @@ class GeometricaAcquisition(QgsMapTool):
                 ok = True
             if ok:
                 feature.setAttributes(form.feature().attributes())
-                layer.addFeature(feature)
                 layer.endEditCommand()
                 self.initVariable()    
             else:
